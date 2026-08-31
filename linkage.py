@@ -56,6 +56,25 @@ def get_joint_positions(theta2, theta3, theta4): #get the x,y coordintes of the 
     B = (O4[0] + ROCKER * np.cos(theta4), O4[1] + ROCKER * np.sin(theta4)) #Using basic trig to find x,y coordinates of B, which is the point where coupler and rocker meet
     return O2, A, B, O4 #Output the coordinates of the four joints in the linkage, which can be used to draw the linkage
 
+def sweep_crank(num_steps=100): #function to sweep the crank through a full rotation, and find the corresponding angles of the coupler and rocker
+    theta2_values = np.linspace(0, 2 * np.pi, num_steps) #create an array of crank angles from 0 to 2pi radians (linspace means evenly spaced values)
+    return theta2_values
+
+def solve_full_rotation(num_steps=100): #function to sweep the crank through a full rotation, and find the corresponding angles of the coupler and rocker
+    theta2_values = sweep_crank(num_steps) #get the array of crank angles from 0 to 2pi radians
+    results = [] #empty list called results to store 03 and 04angles
+
+    guess = (1.0, 2.0) #initial guess for 03 and 04
+    for theta2 in theta2_values: #for each value of 02, find the corresponding 03 and 04
+        theta3, theta4 = solve_position(theta2, initial_guess=guess) #solves the position of 04 and 03 for whichever value of 02 we are currently on, using the previous values of 03 and 04 as the initial guess for the next iteratio
+        results.append((theta2, theta3, theta4)) #saves the angle's results as a bundle of three values, 02, 03, and 04, and appends (adds to the end) it to the results list
+        guess = (theta3, theta4) #makes the solver faster using the previous solution as the initial guess for the next iteration, since the angles will not change drastically from one step to the next
+    return results #returns the list of all the angles of 02, 03, and 04 for the full rotation of the crank
+
+
+
+
+
 if __name__ == "__main__":
     print(f"Ground: {GROUND}, Crank: {CRANK}, Coupler: {COUPLER}, Rocker: {ROCKER}")
 
@@ -66,4 +85,7 @@ if __name__ == "__main__":
     print(f"Rocker angle: {np.degrees(theta4):.2f}°") #converts output from radians to degrees and prints it out
     print(f"Joint positions: {get_joint_positions(theta2_rad, theta3, theta4)}") #output x,y positions of all joints
 
-    #now that we can find the values of 03 and 04 given 02, we need to work on drawing them
+    full_results = solve_full_rotation(num_steps=10) #find all angles of 02, 03, and 04 for a full rotation of the crank, using 10 steps
+    print(f"\nFirst result: {full_results[0]}")
+    print(f"Last result: {full_results[-1]}")
+    print(f"Total steps solved: {len(full_results)}")
