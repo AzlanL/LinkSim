@@ -71,6 +71,31 @@ def solve_full_rotation(num_steps=100): #function to sweep the crank through a f
         guess = (theta3, theta4) #makes the solver faster using the previous solution as the initial guess for the next iteration, since the angles will not change drastically from one step to the next
     return results #returns the list of all the angles of 02, 03, and 04 for the full rotation of the crank
 
+#plotting functions below
+
+import matplotlib.pyplot as plt #library for plotting
+
+def plot_linkage(theta2): #function to plot the linkage at a given crank angle
+    theta3, theta4 = solve_position(theta2) #find the corresponding angles of the coupler and rocker for the given crank angle
+    O2, A, B, O4 = get_joint_positions(theta2, theta3, theta4) #find the x,y coordinates of the four joints in the linkage for the given angles
+
+# Ground link (fixed, dashed)
+    plt.plot([O2[0], O4[0]], [O2[1], O4[1]], '--', color='gray', linewidth=2) #plots the ground link as a dashed line between O2 and O4
+
+    # Crank (blue)
+    plt.plot([O2[0], A[0]], [O2[1], A[1]], 'o-', color='#378ADD', linewidth=3, markersize=8) #plots the crank as a solid line between O2 and A, with blue color, linewidth of 3, and markersize of 8
+
+    # Coupler (green)
+    plt.plot([A[0], B[0]], [A[1], B[1]], 'o-', color='#1D9E75', linewidth=3, markersize=8) #plots the coupler as a solid line between A and B, with green color, linewidth of 3, and markersize of 8
+
+    # Rocker (orange)
+    plt.plot([B[0], O4[0]], [B[1], O4[1]], 'o-', color='#D85A30', linewidth=3, markersize=8) #plots the rocker as a solid line between B and O4, with orange color, linewidth of 3, and markersize of 8
+
+
+    plt.axis('equal') #x and y must use the same scale
+    plt.grid(True) #adds a background grid to the plot
+    plt.title(f"Linkage at crank angle {np.degrees(theta2):.0f}°") #labels the plot with the current crank angle in degrees
+    plt.show() #opens window to display the plot
 
 
 
@@ -86,6 +111,8 @@ if __name__ == "__main__":
     print(f"Joint positions: {get_joint_positions(theta2_rad, theta3, theta4)}") #output x,y positions of all joints
 
     full_results = solve_full_rotation(num_steps=10) #find all angles of 02, 03, and 04 for a full rotation of the crank, using 10 steps
-    print(f"\nFirst result: {full_results[0]}")
-    print(f"Last result: {full_results[-1]}")
+    print(f"\nFirst result: {full_results[0]}") #crank at 0 rad
+    print(f"Last result: {full_results[-1]}") #crank at 2pi rad, which is the same as 0 rad, so the first and last results should be the same
     print(f"Total steps solved: {len(full_results)}")
+
+    plot_linkage(np.radians(45)) #setting 02 to 45 degrees and plotting the linkage at that angle
