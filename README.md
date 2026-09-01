@@ -37,6 +37,7 @@ pip install -r requirements.txt
 
 python linkage.py        # animated linkage + transmission angle
 python interactive.py    # interactive explorer with sliders
+python make_gif.py       # regenerates linkage_demo.gif
 ```
 
 ## How it works
