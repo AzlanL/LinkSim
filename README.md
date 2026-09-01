@@ -2,7 +2,7 @@
 
 A Python-based interactive tool for analysing the kinematics and mechanical behaviour of four-bar linkages. LinkSim combines numerical position solving, mechanism classification, geometric feasibility checks, transmission-angle analysis, and interactive visualisation to explore how changes in link dimensions and crank position affect mechanism behaviour.
 
-![Linkage animation with transmission angle](linkage_demo.gif)
+![Interactive Explorer Demo](interactive_demo.gif)
 
 ## What it does
 
@@ -10,6 +10,12 @@ A Python-based interactive tool for analysing the kinematics and mechanical beha
 - Sweeps through a full 360° rotation to compute the resulting motion of every joint
 - Checks Grashof's condition to confirm whether the crank can fully rotate
 - Calculates the **transmission angle** at every point in the cycle — a standard mechanism-design metric indicating how efficiently force is transmitted through the linkage, and flags when it falls outside the commonly-used 40°–140° "safe" range
+
+<p align="center">
+  <img src="linkage_demo.gif" alt="Linkage Animation with Transmission Angle" width="80%"/>
+</p>
+
+
 - Animates the linkage alongside a live-updating transmission angle graph
 - Includes an **interactive explorer** (`interactive.py`) with sliders for all four link lengths and the crank angle, live Grashof feedback, geometric feasibility checking, auto-rotate play/pause, and a live graph of the coupler-rocker joint's vertical motion through the cycle
 
