@@ -1,0 +1,16 @@
+## What it does
+
+* Solves the vector loop equations for a planar four-bar linkage numerically using `scipy.optimize.fsolve`
+* Calculates the position of the coupler and rocker for a given crank angle
+* Sweeps through a full 360° crank rotation to analyse the complete mechanism motion
+* Checks **Grashof's condition** to determine whether the mechanism is capable of continuous crank rotation
+* Performs **geometric feasibility checking** to identify link-length combinations that cannot form a valid closed linkage
+* Calculates the **transmission angle** throughout the crank cycle and highlights regions outside the commonly used 40°,140° range
+* Provides an interactive explorer with adjustable sliders for **all four link lengths**
+* Provides a **crank-angle slider** for manually controlling the mechanism's position
+* Includes **automatic rotation** with play/pause controls for observing the mechanism through its full cycle
+* Displays live feedback on the mechanism's **Grashof condition and geometric validity** as the link dimensions are changed
+* Plots the **transmission angle** against crank angle to help evaluate mechanical performance throughout the cycle
+* Plots the **vertical motion of the coupler-rocker joint** through the crank cycle
+* Updates the mechanism geometry and analysis plots **in real time** as the inputs are changed
+* Includes a separate animation script for generating a **GIF demonstration** of the linkage motion and transmission-angle behaviour
